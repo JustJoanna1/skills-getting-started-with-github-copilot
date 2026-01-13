@@ -126,6 +126,19 @@ section h3 {
   white-space: nowrap;
 }
 
+.participant-remove {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.participant-remove:hover {
+  background: rgba(198, 40, 40, 0.08);
+}
+
 /* Fallback when there are no participants */
 .participants .no-participants {
   color: #666;
