@@ -83,4 +83,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  }
+
+  document.querySelectorAll('.activity-card').forEach(card => {
+    const listEl = card.querySelector('.participant-list');
+    if (!listEl) return;
+
+    const raw = card.dataset.participants ?? '';
+    let participants = [];
+
+    if (raw.trim() === '') {
+      participants = [];
+    } else {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) participants = parsed;
+        else participants = [String(parsed)];
+      } catch (e) {
+        participants = raw.split(',').map(s => s.trim()).filter(Boolean);
+      }
+    }
+
+    if (participants.length === 0) {
+      listEl.innerHTML = '<li class="no-participants">No participants yet</li>';
+    } else {
+      listEl.innerHTML = participants.map(name => {
+        const initial = escapeHtml(String(name).trim().charAt(0).toUpperCase() || '?');
+        return `<li><span class="participant-badge" aria-hidden>${initial}</span><span class="participant-name">${escapeHtml(name)}</span></li>`;
+      }).join('');
+    }
+  });
 });
