@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python -m pyflakes src/static/app\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
